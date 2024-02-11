@@ -1,7 +1,7 @@
-﻿<Application x:Class="SNAKE_C__WPF_MVVM.App"
+﻿<Application x:Class="SNAKE_WPF_MVVM.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:SNAKE_C__WPF_MVVM"
+             xmlns:local="clr-namespace:SNAKE_WPF_MVVM"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          

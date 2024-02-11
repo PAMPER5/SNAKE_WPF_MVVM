@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace SNAKE_C__WPF_MVVM
+namespace SNAKE_WPF_MVVM
 {
     /// <summary>
     /// Interaction logic for App.xaml

@@ -1,4 +1,4 @@
-﻿namespace SNAKE_C__WPF_MVVM.Models
+﻿namespace SNAKE_WPF_MVVM.Models
 {
     enum MoveDirection
     {

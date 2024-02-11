@@ -1,8 +1,8 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
-using SNAKE_C__WPF_MVVM.Models;
+using SNAKE_WPF_MVVM.Models;
 
-namespace SNAKE_C__WPF_MVVM.ViewModels
+namespace SNAKE_WPF_MVVM.ViewModels
 {
     class MainWndVM : BindableBase
     {
@@ -36,6 +36,7 @@ namespace SNAKE_C__WPF_MVVM.ViewModels
 				for (int column = 0; column < _columnCount; column++)
 				{
 					var cell = new CellVM(row, column);
+					rowList.Add(cell);
 				}
 				AllCells.Add(rowList);
 			}

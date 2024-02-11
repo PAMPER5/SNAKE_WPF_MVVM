@@ -1,7 +1,7 @@
 ﻿using Prism.Mvvm;
-using SNAKE_C__WPF_MVVM.Models;
+using SNAKE_WPF_MVVM.Models;
 
-namespace SNAKE_C__WPF_MVVM.ViewModels
+namespace SNAKE_WPF_MVVM.ViewModels
 {
     class CellVM : BindableBase
     {
