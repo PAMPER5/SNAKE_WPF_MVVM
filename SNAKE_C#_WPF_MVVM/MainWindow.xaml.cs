@@ -11,7 +11,7 @@ namespace SNAKE_WPF_MVVM
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainWndVM();
+            DataContext = new MainWndVM(this);
         }
     }
 }

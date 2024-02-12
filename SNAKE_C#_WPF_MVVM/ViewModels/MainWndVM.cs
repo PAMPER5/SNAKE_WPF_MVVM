@@ -2,6 +2,7 @@
 using Prism.Mvvm;
 using SNAKE_WPF_MVVM.Models;
 using System.Windows;
+using System.Windows.Input;
 
 namespace SNAKE_WPF_MVVM.ViewModels
 {
@@ -28,11 +29,14 @@ namespace SNAKE_WPF_MVVM.ViewModels
 
 		private int _rowCount = 10;
 		private int _columnCount = 10;
+		private int _speed = 300;
 
 		private Snake _snake;
+		private MainWindow _mainWnd;
 
-		public MainWndVM() 
+		public MainWndVM(MainWindow mainWnd) 
 		{
+			_mainWnd = mainWnd;
 			StartStopCommand = new DelegateCommand(StartStop);
 
 			for (int row = 0; row < _rowCount; row++) 
@@ -48,7 +52,9 @@ namespace SNAKE_WPF_MVVM.ViewModels
 
             _snake = new Snake(AllCells, AllCells[_rowCount / 2][_columnCount / 2]);
 
+			_mainWnd.KeyDown += UserKeyDown;
         }
+
 		private void StartStop()
 		{
 			ContinueGame = !ContinueGame;
@@ -58,7 +64,7 @@ namespace SNAKE_WPF_MVVM.ViewModels
 		{
 			while (ContinueGame) 
 			{
-				await Task.Delay(300);
+				await Task.Delay(_speed);
 
 				try
 				{
@@ -70,6 +76,48 @@ namespace SNAKE_WPF_MVVM.ViewModels
 					MessageBox.Show(ex.Message);
 				}
 			}
+		}
+
+		private void UserKeyDown(object sender, KeyEventArgs e)
+		{
+			switch (e.Key)
+			{
+				case Key.A:
+					if (_currqntMoveDirection != MoveDirection.Right)
+						_currqntMoveDirection = MoveDirection.Left;
+					break;
+                case Key.D:
+                    if (_currqntMoveDirection != MoveDirection.Left)
+                        _currqntMoveDirection = MoveDirection.Right;
+                    break;
+                case Key.W:
+                    if (_currqntMoveDirection != MoveDirection.Down)
+                        _currqntMoveDirection = MoveDirection.Up;
+                    break;
+                case Key.S:
+                    if (_currqntMoveDirection != MoveDirection.Up)
+                        _currqntMoveDirection = MoveDirection.Down;
+                    break;
+
+                case Key.Left:
+                    if (_currqntMoveDirection != MoveDirection.Right)
+                        _currqntMoveDirection = MoveDirection.Left;
+                    break;
+                case Key.Right:
+                    if (_currqntMoveDirection != MoveDirection.Left)
+                        _currqntMoveDirection = MoveDirection.Right;
+                    break;
+                case Key.Up:
+                    if (_currqntMoveDirection != MoveDirection.Down)
+                        _currqntMoveDirection = MoveDirection.Up;
+                    break;
+                case Key.Down:
+                    if (_currqntMoveDirection != MoveDirection.Up)
+                        _currqntMoveDirection = MoveDirection.Down;
+                    break;
+				default:
+					break;
+            }
 		}
     }
 }
