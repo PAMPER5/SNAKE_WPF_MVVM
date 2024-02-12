@@ -1,6 +1,7 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
 using SNAKE_WPF_MVVM.Models;
+using System.Windows;
 
 namespace SNAKE_WPF_MVVM.ViewModels
 {
@@ -15,6 +16,8 @@ namespace SNAKE_WPF_MVVM.ViewModels
 			{ 
 				_continueGame = value; 
 				RaisePropertyChanged(nameof(ContinueGame));
+
+				if (_continueGame) SnakeGo();
 			}
 		}
 
@@ -25,6 +28,8 @@ namespace SNAKE_WPF_MVVM.ViewModels
 
 		private int _rowCount = 10;
 		private int _columnCount = 10;
+
+		private Snake _snake;
 
 		public MainWndVM() 
 		{
@@ -40,11 +45,31 @@ namespace SNAKE_WPF_MVVM.ViewModels
 				}
 				AllCells.Add(rowList);
 			}
-		}
 
+            _snake = new Snake(AllCells, AllCells[_rowCount / 2][_columnCount / 2]);
+
+        }
 		private void StartStop()
 		{
 			ContinueGame = !ContinueGame;
+		}
+
+		private async Task SnakeGo()
+		{
+			while (ContinueGame) 
+			{
+				await Task.Delay(300);
+
+				try
+				{
+					_snake.Move(_currqntMoveDirection);
+				}
+				catch(Exception ex)
+				{
+					ContinueGame = false;
+					MessageBox.Show(ex.Message);
+				}
+			}
 		}
     }
 }
