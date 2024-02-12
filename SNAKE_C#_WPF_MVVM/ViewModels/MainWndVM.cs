@@ -29,15 +29,17 @@ namespace SNAKE_WPF_MVVM.ViewModels
 
 		private int _rowCount = 10;
 		private int _columnCount = 10;
-		private int _speed = 300;
+		private const int SPEED = 300;
+		private int _speed = SPEED;
 
 		private Snake _snake;
 		private MainWindow _mainWnd;
+		private CellVM _lastFood;
 
 		public MainWndVM(MainWindow mainWnd) 
 		{
 			_mainWnd = mainWnd;
-			StartStopCommand = new DelegateCommand(StartStop);
+			StartStopCommand = new DelegateCommand(() => ContinueGame = !ContinueGame);
 
 			for (int row = 0; row < _rowCount; row++) 
 			{
@@ -50,15 +52,12 @@ namespace SNAKE_WPF_MVVM.ViewModels
 				AllCells.Add(rowList);
 			}
 
-            _snake = new Snake(AllCells, AllCells[_rowCount / 2][_columnCount / 2]);
+            _snake = new Snake(AllCells, AllCells[_rowCount / 2][_columnCount / 2], CreateFood);
+			CreateFood();
 
-			_mainWnd.KeyDown += UserKeyDown;
+
+            _mainWnd.KeyDown += UserKeyDown;
         }
-
-		private void StartStop()
-		{
-			ContinueGame = !ContinueGame;
-		}
 
 		private async Task SnakeGo()
 		{
@@ -70,10 +69,14 @@ namespace SNAKE_WPF_MVVM.ViewModels
 				{
 					_snake.Move(_currqntMoveDirection);
 				}
-				catch(Exception ex)
+				catch(Exception)
 				{
 					ContinueGame = false;
-					MessageBox.Show(ex.Message);
+					MessageBox.Show("Game over");
+					_speed = SPEED;
+					_snake.Restart();
+					_lastFood.CellType = CellType.None;
+					CreateFood();
 				}
 			}
 		}
@@ -118,6 +121,24 @@ namespace SNAKE_WPF_MVVM.ViewModels
 				default:
 					break;
             }
+		}
+
+		private void CreateFood()
+		{
+			var random = new Random();
+
+			int row = random.Next(0, _rowCount);
+			int column = random.Next(0, _columnCount);
+
+			_lastFood = AllCells[row][column];
+
+			if (_snake.SnakeCells.Contains(_lastFood))
+			{
+				CreateFood();
+			}
+
+			_lastFood.CellType = CellType.Food;
+			_speed = (int)(_speed * 0.95);
 		}
     }
 }

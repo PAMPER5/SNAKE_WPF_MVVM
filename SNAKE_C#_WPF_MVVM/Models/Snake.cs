@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,18 +15,31 @@ namespace SNAKE_WPF_MVVM.Models
         private List<List<CellVM>> _allCells;
 
         private CellVM _start;
+        private Action _generateFood;
 
-        public Snake(List<List<CellVM>> allCells, CellVM start)
+        public Snake(List<List<CellVM>> allCells, CellVM start, Action generateFood)
         {
             _start = start;
             _allCells = allCells;
+            _generateFood = generateFood;
             _start.CellType = CellType.Snake;
-            SnakeCells.Enqueue(start);
+            SnakeCells.Enqueue(_start);
+        }
+
+        public void Restart()
+        {
+            foreach(var cell in SnakeCells)
+            {
+                cell.CellType = CellType.None;
+            }
+            SnakeCells.Clear();
+            _start.CellType = CellType.Snake;
+            SnakeCells.Enqueue(_start);
         }
 
         public void Move(MoveDirection direction)
         {
-            var leaderCell = SnakeCells.Peek();
+            var leaderCell = SnakeCells.Last();
             int nextRow = leaderCell.Row;
             int nextColumn = leaderCell.Column;
 
@@ -66,6 +80,7 @@ namespace SNAKE_WPF_MVVM.Models
                     case CellType.Food:
                         nextCell.CellType = CellType.Snake;
                         SnakeCells.Enqueue(nextCell);
+                        _generateFood?.Invoke();
                         break;
 
                     default:
