@@ -27,8 +27,8 @@ namespace SNAKE_WPF_MVVM.ViewModels
 		public DelegateCommand StartStopCommand { get; }
 		private MoveDirection _currqntMoveDirection = MoveDirection.Right;
 
-		private int _rowCount = 10;
-		private int _columnCount = 10;
+		private int _rowCount = 13;
+		private int _columnCount = 13;
 		private const int SPEED = 300;
 		private int _speed = SPEED;
 

@@ -6,18 +6,17 @@
         xmlns:local="clr-namespace:SNAKE_WPF_MVVM"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="MainWindow" Height="700" Width="700">
-    <Grid>
+        Title="MainWindow" Height="735" Width="665" ResizeMode="NoResize">
+    <Grid Background="LightGreen">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="650"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
-        <ItemsControl
-            ItemsSource="{Binding AllCells}"
-            Background="Black"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center">
+        <ItemsControl Grid.Row="0"
+        ItemsSource="{Binding AllCells}"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <ItemsControl ItemsSource="{Binding}">
@@ -28,18 +27,18 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Grid Width="50" Height="50" Margin="1">
+                                <Grid Width="50" Height="50" IsHitTestVisible="False">
                                     <Grid.Style>
                                         <Style TargetType="Grid">
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding CellType}" Value="None">
-                                                    <Setter Property="Background" Value="White"/>
+                                                    <Setter Property="Background" Value="LightGreen"/>
                                                 </DataTrigger>
                                                 <DataTrigger Binding="{Binding CellType}" Value="Snake">
                                                     <Setter Property="Background" Value="LightPink"/>
                                                 </DataTrigger>
                                                 <DataTrigger Binding="{Binding CellType}" Value="Food">
-                                                    <Setter Property="Background" Value="LightGreen"/>
+                                                    <Setter Property="Background" Value="Tomato"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -51,7 +50,7 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        
+
         <Button Grid.Row="1" Command="{Binding StartStopCommand}">
             <Button.Content>
                 <TextBlock>
