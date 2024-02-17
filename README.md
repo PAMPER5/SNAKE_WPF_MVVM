@@ -1,1 +1,2 @@
-![Uploading 2024-02-17 20-07-17.gif…]()
+
+![2024-02-17 20-07-17](https://github.com/PAMPER5/SNAKE_WPF_MVVM/assets/133389713/28592ced-bc19-452c-b34f-47a16327e85b)
